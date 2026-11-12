@@ -1,0 +1,20 @@
+# ==============================================================================
+# Dockerfile para Entorno de Desarrollo (Hot Reload activo)
+# ==============================================================================
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instalar dependencias primero para optimizar el caché de Docker
+COPY package*.json ./
+RUN npm install
+
+# Copiar el código fuente
+COPY . .
+
+# Exponer el puerto por defecto de Vite
+EXPOSE 5173
+
+# Ejecutar el servidor de desarrollo de Vite escuchando en todas las interfaces
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+
